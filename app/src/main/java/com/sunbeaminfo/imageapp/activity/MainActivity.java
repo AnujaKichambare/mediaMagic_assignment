@@ -10,6 +10,9 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
 
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.sunbeaminfo.imageapp.R;
 import com.sunbeaminfo.imageapp.adapter.PhotoAdapter;
 import com.sunbeaminfo.imageapp.model.Photo;
@@ -38,10 +41,18 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        recyclerView=findViewById(R.id.recyclerView);
+        recyclerView=(RecyclerView) findViewById(R.id.recyclerView);
         adapter= new PhotoAdapter(this,photos);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new GridLayoutManager(this,2));
+
+        DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder()
+                .cacheInMemory(true).resetViewBeforeLoading(true)
+                .cacheOnDisk(true).build();
+        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(getApplicationContext())
+                .defaultDisplayImageOptions(defaultOptions)
+                .build();
+        ImageLoader.getInstance().init(config);
 
         new FetchData().execute();
 
@@ -85,9 +96,13 @@ public class MainActivity extends AppCompatActivity {
                     Bitmap bitmap;
 
                     bitmap=BitmapFactory.decodeStream((InputStream) new URL(imagemageUrl).getContent());
-                    photo.setImage(bitmap);
+                    photo.setImage(imagemageUrl);
+
+
 
                     photos.add(photo);
+
+
 
                     Log.e("author", JO.get("author").toString());
                     Log.e("imageurl",imagemageUrl);
@@ -113,6 +128,8 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
+            PhotoAdapter adapter=new PhotoAdapter(getApplicationContext(),photos);
+            recyclerView.setAdapter(adapter);
             adapter.notifyDataSetChanged();
         }
     }

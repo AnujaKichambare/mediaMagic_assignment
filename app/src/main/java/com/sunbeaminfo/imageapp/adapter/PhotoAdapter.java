@@ -3,12 +3,14 @@ package com.sunbeaminfo.imageapp.adapter;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.sunbeaminfo.imageapp.R;
 import com.sunbeaminfo.imageapp.model.Photo;
 
@@ -35,11 +37,14 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.ViewHolder>
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
-        Photo photo=photos.get(i);
+    public void onBindViewHolder(@NonNull ViewHolder viewHolder, int position) {
+        Photo photo=photos.get(position);
 
         viewHolder.textView.setText(photo.getAuthor());
-        viewHolder.imageView.setImageBitmap(photo.getImage());
+
+        ImageLoader.getInstance().displayImage((photos.get(position).getImage()),viewHolder.imageView);
+
+
 
     }
 

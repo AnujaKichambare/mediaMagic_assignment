@@ -6,22 +6,22 @@ public class Photo
 {
     int id;
     String author;
-    Bitmap image;
+    String image;
 
     public Photo(){
 
     }
-    public Photo(int id, String author,Bitmap image) {
+    public Photo(int id, String author,String image) {
         this.id = id;
         this.author = author;
         this.image=image;
     }
 
-    public Bitmap getImage() {
+    public String getImage() {
         return image;
     }
 
-    public void setImage(Bitmap image) {
+    public void setImage(String image) {
         this.image = image;
     }
 
