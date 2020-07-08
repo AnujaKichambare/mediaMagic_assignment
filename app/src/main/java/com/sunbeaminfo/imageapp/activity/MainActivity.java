@@ -1,5 +1,6 @@
 package com.sunbeaminfo.imageapp.activity;
 
+import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
@@ -8,6 +9,8 @@ import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -35,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     PhotoAdapter adapter;
     ArrayList<Photo> photos=new ArrayList<>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -134,5 +138,33 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
 
+        if(newConfig.orientation==Configuration.ORIENTATION_PORTRAIT)
+        {
+            recyclerView.setLayoutManager(new GridLayoutManager(this,2));
+        }else if (newConfig.orientation==Configuration.ORIENTATION_LANDSCAPE)
+        {
+
+            recyclerView.setLayoutManager(new GridLayoutManager(this,4));
+
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    }
 }
