@@ -9,8 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import com.nostra13.universalimageloader.core.ImageLoader;
 import com.sunbeaminfo.imageapp.R;
 import com.sunbeaminfo.imageapp.model.Photo;
 
@@ -41,10 +39,7 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.ViewHolder>
         Photo photo=photos.get(position);
 
         viewHolder.textView.setText(photo.getAuthor());
-
-        ImageLoader.getInstance().displayImage((photos.get(position).getImage()),viewHolder.imageView);
-
-
+        viewHolder.imageView.setImageBitmap(photo.getImage());
 
     }
 

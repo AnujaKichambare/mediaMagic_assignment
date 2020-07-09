@@ -12,10 +12,6 @@ import android.util.Log;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.sunbeaminfo.imageapp.R;
 import com.sunbeaminfo.imageapp.adapter.PhotoAdapter;
 import com.sunbeaminfo.imageapp.model.Photo;
@@ -50,18 +46,17 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new GridLayoutManager(this,2));
 
-        DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder()
-                .cacheInMemory(true).resetViewBeforeLoading(true)
-                .cacheOnDisk(true).build();
-        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(getApplicationContext())
-                .defaultDisplayImageOptions(defaultOptions)
-                .build();
-        ImageLoader.getInstance().init(config);
-
         new FetchData().execute();
 
 
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        new FetchData().execute();
+    }
+
     public class FetchData extends AsyncTask<Void,Void,Void> {
         //        ArrayList<Integer> idarr=new ArrayList<>();
         String data = "";
@@ -100,7 +95,8 @@ public class MainActivity extends AppCompatActivity {
                     Bitmap bitmap;
 
                     bitmap=BitmapFactory.decodeStream((InputStream) new URL(imagemageUrl).getContent());
-                    photo.setImage(imagemageUrl);
+                    //photo.setImage(imagemageUrl);
+                    photo.setImage(bitmap);
 
 
 
